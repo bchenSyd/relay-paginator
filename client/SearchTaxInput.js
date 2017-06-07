@@ -21,6 +21,10 @@ class SearchTaxInput extends Component<any, any, any> {
   }
   _search = _ => {
     let keyword = this.state.searchKey;
+    if(!keyword){
+      alert('type a fruit');
+      return;
+    }
     const refetchVariables = fragmentVariables => ({
       keyword,
       count: 30
@@ -59,6 +63,7 @@ export default createRefetchContainer(
       $cursor: String
     ){
       viewer {
+        # !! call arguments without argumentDefinitions
         ... SearchTaxInput_viewer @arguments(
           keyword: $keyword,
           first: $count,
