@@ -7,7 +7,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node azure/index.js ",
+    "start":"node azure/index.js",
     "clean": "find . -name __generated__ -print | xargs rm -rf",
     "build": "relay-compiler --src ./client/ --schema ./server/schema.graphql  --extensions js jsx tsx",
     "start-server": "nodemon server/index.js  --exec babel-node",
