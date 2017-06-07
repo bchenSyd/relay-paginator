@@ -7,7 +7,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node azure/index.js",
+    "start": "node azure/index.js",
     "clean": "find . -name __generated__ -print | xargs rm -rf",
     "build": "relay-compiler --src ./client/ --schema ./server/schema.graphql  --extensions js jsx tsx",
     "start-server": "nodemon server/index.js  --exec babel-node",
@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-runtime": "^6.11.6",
+    "express": "^4.15.3",
     "express-graphql": "^0.6.4",
     "graphql": "^0.9.1",
     "graphql-relay": "^0.5.1"
