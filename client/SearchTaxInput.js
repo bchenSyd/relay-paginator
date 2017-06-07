@@ -23,7 +23,7 @@ class SearchTaxInput extends Component<any, any, any> {
     let keyword = this.state.searchKey;
     const refetchVariables = fragmentVariables => ({
       keyword,
-      count: 30
+      count: 5
     });
 
     this.props.relay.refetch(refetchVariables, null);
@@ -60,11 +60,7 @@ export default createRefetchContainer(
     ){
       viewer {
         # !! call arguments without argumentDefinitions
-        ... SearchTaxInput_viewer @arguments(
-          keyword: $keyword,
-          first: $count,
-          after: $cursor
-        )
+        ... SearchTaxInput_viewer
       }
     }
   `

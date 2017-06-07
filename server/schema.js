@@ -57,7 +57,7 @@ const _searchTaxItems = keyword => {
 
 const {nodeInterface, nodeField} = nodeDefinitions(
     globalId => {
-        const {type, id} = fromGlobalId(globalId);
+        const [type, id] = globalId.split(':');
         return searchTaxItems.find(e => e.id === Number(id));
     },
     obj => GraphQLSearchTaxItem
@@ -66,7 +66,10 @@ const {nodeInterface, nodeField} = nodeDefinitions(
 const GraphQLSearchTaxItem = new GraphQLObjectType({
     name: 'SearchTaxItem',
     fields: {
-        id: globalIdField('SearchTaxItem'),
+        id: {
+            type: new GraphQLNonNull(GraphQLID),
+            resolve: (obj) => 'SearchTaxItem:' + obj.id,
+        },
         title: {
             type: GraphQLString,
             resolve: (obj) => obj.title,
@@ -93,7 +96,10 @@ const {
 const GraphQLUser = new GraphQLObjectType({
     name: 'User',
     fields: {
-        id: globalIdField('User'),
+        id: { // every GraphqlObjectType need an 'id' field to generate __dataId 
+            type: new GraphQLNonNull(GraphQLID),
+            resolve:_=>'user:0',
+        },
         searchTaxClass: {
             type: SearchTaxItemsConnection,
             args: {

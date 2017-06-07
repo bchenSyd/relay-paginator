@@ -30,7 +30,6 @@ type Query {
 }
 
 type SearchTaxItem implements Node {
-  # The ID of an object
   id: ID!
   title: String
   description: String
@@ -56,7 +55,6 @@ type SearchTaxItemEdge {
 }
 
 type User {
-  # The ID of an object
   id: ID!
   searchTaxClass(keyword: String = "", after: String, first: Int, before: String, last: Int): SearchTaxItemConnection
 }
