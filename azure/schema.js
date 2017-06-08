@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.schema = undefined;
 
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -26,7 +30,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var searchTaxItems = void 0;
 
 (function _setupData() {
-    searchTaxItems = (0, _from2.default)(Array(20), function (_, index) {
+    searchTaxItems = (0, _from2.default)(Array(120), function (_, index) {
         var tmp = index % 3;
         var keyword = void 0;
         switch (tmp) {
@@ -59,9 +63,10 @@ var _searchTaxItems = function _searchTaxItems(keyword) {
 };
 
 var _nodeDefinitions = (0, _graphqlRelay.nodeDefinitions)(function (globalId) {
-    var _fromGlobalId = (0, _graphqlRelay.fromGlobalId)(globalId),
-        type = _fromGlobalId.type,
-        id = _fromGlobalId.id;
+    var _globalId$split = globalId.split(':'),
+        _globalId$split2 = (0, _slicedToArray3.default)(_globalId$split, 2),
+        type = _globalId$split2[0],
+        id = _globalId$split2[1];
 
     return searchTaxItems.find(function (e) {
         return e.id === Number(id);
@@ -75,7 +80,12 @@ var _nodeDefinitions = (0, _graphqlRelay.nodeDefinitions)(function (globalId) {
 var GraphQLSearchTaxItem = new _graphql.GraphQLObjectType({
     name: 'SearchTaxItem',
     fields: {
-        id: (0, _graphqlRelay.globalIdField)('SearchTaxItem'),
+        id: {
+            type: new _graphql.GraphQLNonNull(_graphql.GraphQLID),
+            resolve: function resolve(obj) {
+                return 'SearchTaxItem:' + obj.id;
+            }
+        },
         title: {
             type: _graphql.GraphQLString,
             resolve: function resolve(obj) {
@@ -105,7 +115,12 @@ var _connectionDefinition = (0, _graphqlRelay.connectionDefinitions)({
 var GraphQLUser = new _graphql.GraphQLObjectType({
     name: 'User',
     fields: {
-        id: (0, _graphqlRelay.globalIdField)('User'),
+        id: { // every GraphqlObjectType need an 'id' field to generate __dataId 
+            type: new _graphql.GraphQLNonNull(_graphql.GraphQLID),
+            resolve: function resolve(_) {
+                return 'user:0';
+            }
+        },
         searchTaxClass: {
             type: SearchTaxItemsConnection,
             args: (0, _extends3.default)({

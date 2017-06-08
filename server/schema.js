@@ -24,7 +24,7 @@ import {
 let searchTaxItems;
 
 (function _setupData() {
-    searchTaxItems = Array.from(Array(20), (_, index) => {
+    searchTaxItems = Array.from(Array(120), (_, index) => {
         const tmp = index % 3;
         let keyword;
         switch (tmp) {
